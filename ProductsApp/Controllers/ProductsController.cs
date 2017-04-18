@@ -38,5 +38,29 @@ namespace ProductsApp.Controllers
 
             return _repository.GetAll().Where(p => string.Equals(p.Category, category, StringComparison.OrdinalIgnoreCase));
         }
+
+        /// <summary>
+        /// The method takes a parameter of type Product. In Web API, parameters with complex types are deserialized from the request body. Therefore, we expect the client to send a serialized representation of a product object, in either XML or JSON format.
+        /// Model Validation : https://docs.microsoft.com/en-us/aspnet/web-api/overview/formats-and-model-binding/model-validation-in-aspnet-web-api
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public HttpResponseMessage PostProduct(Product item)
+        {
+            if (ModelState.IsValid)
+            {
+                item = _repository.Add(item);
+                var response = Request.CreateResponse<Product>(HttpStatusCode.Created, item);
+
+                string uri = Url.Link("DefaultApi", new { id = item.Id });
+                response.Headers.Location = new Uri(uri);
+
+                return response;
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+        }
     }
 }
