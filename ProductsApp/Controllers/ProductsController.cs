@@ -62,5 +62,17 @@ namespace ProductsApp.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
         }
+
+        public void PutProduct(int id, Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                product.Id = id;
+                if (!_repository.Update(product))
+                {
+                    throw new HttpResponseException(HttpStatusCode.NotFound);
+                }
+            }
+        }
     }
 }
