@@ -74,5 +74,13 @@ namespace ProductsApp.Controllers
                 }
             }
         }
+
+        public void DeleteProduct(int id)
+        {
+            Product item = _repository.Get(id);
+            if (item == null) throw new HttpResponseException(HttpStatusCode.NotFound);
+
+            _repository.Remove(id);
+        }
     }
 }
