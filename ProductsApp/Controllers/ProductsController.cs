@@ -10,26 +10,33 @@ namespace ProductsApp.Controllers
 {
     public class ProductsController : ApiController
     {
-        Product[] products = new Product[]
-       {
-            new Product { Id = 1, Name = "Tomato Soup", Category = "Groceries", Price = 1 },
-            new Product { Id = 2, Name = "Yo-yo", Category = "Toys", Price = 3.75M },
-            new Product { Id = 3, Name = "Hammer", Category = "Hardware", Price = 16.99M }
-       };
+        /// <summary>
+        /// Calling new ProductRepository() in the controller is not the best design, because it ties the controller to a particular implementation of IRepository.
+        /// For a better approach, see Using the Web API Dependency Resolver.
+        /// https://docs.microsoft.com/en-us/aspnet/web-api/overview/advanced/dependency-injection
+        /// </summary>
+        private IRepository<Product> _repository = new ProductRepository();
 
         public IEnumerable<Product> GetAllProducts()
         {
-            return products;
+            return _repository.GetAll();
         }
 
         public IHttpActionResult GetProduct(int id)
         {
-            var product = products.FirstOrDefault((p) => p.Id == id);
+            var product = _repository.Get(id);
             if (product == null)
             {
                 return NotFound();
             }
             return Ok(product);
+        }
+
+        public IEnumerable<Product> GetProductsByCategory(string category)
+        {
+            if (string.IsNullOrEmpty(category)) throw new ArgumentNullException(nameof(category));
+
+            return _repository.GetAll().Where(p => string.Equals(p.Category, category, StringComparison.OrdinalIgnoreCase));
         }
     }
 }
