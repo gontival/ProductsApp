@@ -14,6 +14,9 @@ namespace ProductsApp
         {
             // Web API configuration and services
 
+            // Restrict access for every Web Api Controller
+            config.Filters.Add(new AuthorizeAttribute());
+
             // Register the IRepository intergace with Unity and then creates a UnityResolver
             var container = new UnityContainer();
             container.RegisterType<IRepository<Product>, ProductRepository>(new HierarchicalLifetimeManager());

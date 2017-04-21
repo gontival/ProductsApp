@@ -8,6 +8,7 @@ using System.Web.Http;
 
 namespace ProductsApp.Controllers
 {
+    [Authorize]
     public class ProductsController : ApiController
     {
         /// <summary>
@@ -22,6 +23,7 @@ namespace ProductsApp.Controllers
             _repository = repository;
         }
 
+        [AllowAnonymous]
         public IEnumerable<Product> GetAllProducts()
         {
             return _repository.GetAll();
