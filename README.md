@@ -13,10 +13,18 @@ https://docs.microsoft.com/en-us/aspnet/web-api/overview/advanced/calling-a-web-
 Dependency injection in Asp.net Web Api 2 :
 https://docs.microsoft.com/en-us/aspnet/web-api/overview/advanced/dependency-injection
 
-Todo :
-
 Authentication and Authorization in Web Api :
 https://docs.microsoft.com/en-us/aspnet/web-api/overview/security/authentication-and-authorization-in-aspnet-web-api
+
+Todo :
+Secure a Web API with Individual Accounts and Local Login in ASP.NET Web API 2.2 :
+https://docs.microsoft.com/en-us/aspnet/web-api/overview/security/individual-accounts-in-web-api
+
+In a new project :
+https://docs.microsoft.com/en-us/aspnet/web-api/overview/data/using-web-api-with-entity-framework/
+
+
+
 
 
 
