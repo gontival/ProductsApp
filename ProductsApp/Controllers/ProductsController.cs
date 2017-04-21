@@ -15,7 +15,12 @@ namespace ProductsApp.Controllers
         /// For a better approach, see Using the Web API Dependency Resolver.
         /// https://docs.microsoft.com/en-us/aspnet/web-api/overview/advanced/dependency-injection
         /// </summary>
-        private IRepository<Product> _repository = new ProductRepository();
+        private IRepository<Product> _repository;
+
+        public ProductsController(IRepository<Product> repository)
+        {
+            _repository = repository;
+        }
 
         public IEnumerable<Product> GetAllProducts()
         {

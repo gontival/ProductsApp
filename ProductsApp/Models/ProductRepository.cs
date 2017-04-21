@@ -6,10 +6,12 @@ using System.Web;
 
 namespace ProductsApp.Models
 {
-    public class ProductRepository : IRepository<Product>
+    public class ProductRepository : IRepository<Product>, IDisposable
     {
         private List<Product> products = new List<Product>();
         private int _nextId = 1;
+
+        private ProductsContext db = new ProductsContext();
 
         public ProductRepository()
         {
@@ -54,6 +56,24 @@ namespace ProductsApp.Models
             products.Add(item);
 
             return true;
+        }
+
+        protected void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (db != null)
+                {
+                    db.Dispose();
+                    db = null;
+                }
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

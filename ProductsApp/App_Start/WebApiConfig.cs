@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.Practices.Unity;
+using ProductsApp.Models;
+using ProductsApp.Resolver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -10,6 +13,11 @@ namespace ProductsApp
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+
+            // Register the IRepository intergace with Unity and then creates a UnityResolver
+            var container = new UnityContainer();
+            container.RegisterType<IRepository<Product>, ProductRepository>(new HierarchicalLifetimeManager());
+            config.DependencyResolver = new UnityResolver(container);
 
             // Web API routes
             config.MapHttpAttributeRoutes();
